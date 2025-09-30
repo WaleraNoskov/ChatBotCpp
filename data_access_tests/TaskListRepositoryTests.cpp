@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "data_access/TaskListRepository.h"
+#include "data_access_sqlite/TaskListRepository.h"
 #include "gtest/gtest.h"
 
 class TaskListRepositoryTests : public::testing::Test {

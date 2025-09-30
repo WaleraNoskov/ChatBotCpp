@@ -33,12 +33,21 @@ add_library(core_lib
 target_include_directories(core_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(data_access_lib
-        data_access/SqliteService.cpp
-        data_access/TaskListRepository.cpp
+        data_access_sqlite/SqliteService.cpp
+        data_access_sqlite/TaskListRepository.cpp
 )
 
 target_include_directories(data_access_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(data_access_lib PUBLIC core_lib unofficial::sqlite3::sqlite3)
+
+add_library(application_lib
+        application/TaskListService.cpp
+        application/TaskListService.h
+
+)
+
+target_include_directories(application_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_directories(application_lib PUBLIC core_lib data_access_lib)
 
 # --- Приложение ---
 add_executable(untitled
@@ -64,6 +73,7 @@ add_executable(tests
 target_link_libraries(tests PRIVATE
         core_lib
         data_access_lib
+        application_lib
         gtest_main
         unofficial::sqlite3::sqlite3
 )
