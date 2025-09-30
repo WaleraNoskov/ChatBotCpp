@@ -52,8 +52,8 @@ target_link_directories(application_lib PUBLIC core_lib data_access_lib)
 # --- Приложение ---
 add_executable(untitled
         main.cpp
-        controls/chat/ChatViewModel.cpp
-        controls/chat/ChatView.cpp
+        client/controls/chat/ChatViewModel.cpp
+        client/controls/chat/ChatView.cpp
 )
 
 target_link_libraries(untitled PRIVATE
