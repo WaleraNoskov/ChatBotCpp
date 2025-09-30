@@ -1,7 +1,3 @@
-//
-// Created by coder5 on 15.09.2025.
-//
-
 #ifndef UNTITLED_CHATVIEW_H
 #define UNTITLED_CHATVIEW_H
 #include "ChatViewModel.h"

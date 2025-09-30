@@ -2,8 +2,12 @@
 #include "controls/chat/ChatViewModel.h"
 #include "ftxui/component/component.hpp"
 #include "ftxui/component/screen_interactive.hpp"
+#include "data_access/SqliteService.h"
 
 int main() {
+    SqliteService sqliteService{};
+    sqliteService.initialize();
+
     ChatViewModel chatViewModel;
     ChatView chatView(chatViewModel);
 
