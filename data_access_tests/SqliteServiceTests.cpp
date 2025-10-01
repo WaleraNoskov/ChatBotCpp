@@ -1,5 +1,5 @@
-#include "../cmake-build-debug/_deps/googletest-src/googletest/include/gtest/gtest.h"
 #include "../data_access_sqlite/SqliteService.h"
+#include "gtest/gtest.h"
 
 TEST(SqliteServiceTests, Initialize_CreatesTables) {
     SqliteService service{};

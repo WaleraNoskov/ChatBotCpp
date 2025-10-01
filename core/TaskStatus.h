@@ -1,10 +1,7 @@
-#ifndef UNTITLED_TASKSTATUS_H
-#define UNTITLED_TASKSTATUS_H
+#pragma once
 
 enum class TaskStatus {
     Planned,
     InProgress,
     Done
 };
-
-#endif //UNTITLED_TASKSTATUS_H

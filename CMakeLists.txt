@@ -47,21 +47,39 @@ add_library(application_lib
 )
 
 target_include_directories(application_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_directories(application_lib PUBLIC core_lib data_access_lib)
+target_link_libraries(application_lib PUBLIC core_lib data_access_lib)
+
+add_library(client_lib
+        client/feature/lists_feature/presentation/TaskListsPage.cpp
+        client/feature/lists_feature/presentation/TaskListsPage.h
+        client/feature/lists_feature/ListsFeatureState.h
+        client/feature/framework/Action.h
+        client/feature/lists_feature/ListsFeatureAcions.h
+        client/feature/framework/Reducer.h
+        client/feature/framework/Store.h
+        client/feature/lists_feature/ListsFeatureReducer.cpp
+        client/feature/lists_feature/ListsFeatureReducer.h
+)
+
+target_include_directories(client_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(client_lib PUBLIC
+        core_lib
+        data_access_lib
+        application_lib
+        ftxui::component
+        ftxui::dom
+        ftxui::screen)
 
 # --- Приложение ---
 add_executable(untitled
         main.cpp
-        client/controls/chat/ChatViewModel.cpp
-        client/controls/chat/ChatView.cpp
 )
 
 target_link_libraries(untitled PRIVATE
         core_lib
         data_access_lib
-        ftxui::component
-        ftxui::dom
-        ftxui::screen
+        application_lib
+        client_lib
 )
 
 # --- Тесты ---

@@ -1,28 +1,32 @@
-#include "controls/chat/ChatView.h"
-#include "controls/chat/ChatViewModel.h"
-#include "ftxui/component/component.hpp"
+#include "client/feature/lists_feature/ListsFeatureAcions.h"
+#include "client/feature/lists_feature/ListsFeatureState.h"
 #include "ftxui/component/screen_interactive.hpp"
-#include "data_access_sqlite/SqliteService.h"
+#include "client/feature/framework/Store.h"
+#include "client/feature/lists_feature/ListsFeatureReducer.h"
+#include "client/feature/lists_feature/presentation/TaskListsPage.h"
+#include "ftxui/component/component.hpp"
 
 int main() {
     SqliteService sqliteService{};
     sqliteService.initialize();
 
-    ChatViewModel chatViewModel;
-    ChatView chatView(chatViewModel);
+    TaskListRepository taskListRepository(sqliteService);
+    TaskListService taskListService(taskListRepository);
+
+    Store<ListsFeatureState, ListsFeatureAction> listsFeatureStore(
+        ListsFeatureState{},
+        [&](const ListsFeatureState &state, const ListsFeatureAction &action) {
+            return ListsFeatureReducer(state, action, taskListService);
+        });
 
     auto screen = ftxui::ScreenInteractive::TerminalOutput();
-
-    std::thread bot_thread([&]() {
-        int counter = 0;
-
-        while (true) {
-            std::this_thread::sleep_for(std::chrono::seconds(3));
-            chatViewModel.addMessage("Bot", "Hello! [message #" + std::to_string(counter++) + "]");
-            screen.PostEvent(ftxui::Event::Custom);
-        }
+    auto renderer = ftxui::Renderer([&] {
+        return RenderTaskListsPage(listsFeatureStore.GetState());
     });
 
-    screen.Loop(chatView.getComponent());
-    bot_thread.join();
+    listsFeatureStore.Subscribe([&] { screen.PostEvent(ftxui::Event::Custom); });
+    listsFeatureStore.Dispatch(Add{"Task 1"});
+    listsFeatureStore.Dispatch(Refresh{0, 10, ""});
+
+    screen.Loop(renderer);
 }

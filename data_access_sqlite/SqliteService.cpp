@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <sqlite3.h>
 
 void SqliteService::initialize() {
     if (auto result = sqlite3_open(":memory:", &database); result != SQLITE_OK) {

@@ -15,9 +15,10 @@ void TaskList::removeTask(const Task &task) {
     tasks.erase(iterator);
 }
 
-TaskList::TaskList(const int id, const std::string &name) {
-    this->id = id;
-    this->name = name;
+TaskList::TaskList(const int id, const std::string &name) : id(id), name(name) {
+}
+
+TaskList::TaskList(int id, const std::string &name, const std::vector<Task> &tasks) : id(id), name(name), tasks(tasks) {
 }
 
 int TaskList::getId() const {

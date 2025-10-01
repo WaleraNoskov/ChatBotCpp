@@ -9,7 +9,7 @@ protected:
     std::unique_ptr<TaskListRepository> repository;
 
     void SetUp() override {
-        service.initialize(); // создаём in-memory SQLite
+        service.initialize();
         repository = std::make_unique<TaskListRepository>(service);
     }
 };

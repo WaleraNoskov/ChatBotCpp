@@ -11,6 +11,7 @@ private:
 
 public:
     TaskList(int id, const std::string &name);
+    TaskList(int id, const std::string &name, const std::vector<Task> &tasks);
 
     [[nodiscard]] int getId() const;
     [[nodiscard]] const std::string &getName() const;
